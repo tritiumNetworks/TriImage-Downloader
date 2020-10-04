@@ -15,15 +15,15 @@ fn main()  {
     let data = response.json().unwrap();
     // (args[0], view, download) (args[1], img_number)
 
-    let mut a=String::new();
+    let mut a = String::new();
     print!("view or download: ");
-    let _=stdout().flush();
+    let _= stdout().flush();
     stdin().read_line(&mut a).expect("Error");
 
     //number or imageid (ex. 114fc734bb)
-    let mut s=String::new();
+    let mut s = String::new();
     print!("Please enter some number or string: ");
-    let _=stdout().flush();
+    let _= stdout().flush();
     stdin().read_line(&mut s).expect("Error");
 
     let num= s.trim();
