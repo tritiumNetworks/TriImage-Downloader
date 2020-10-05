@@ -18,9 +18,6 @@ fn main() {
     let mut img =  String::from("https://img.trinets.xyz/api/v1?target=");
     img.push_str(&(tag.to_owned() + "&type=list"));
     let response =  requests::get(img).unwrap();
-    if  response.is_json() == false {
-        return;
-    }
     let data = response.json().unwrap();
     let len:usize = data.len() - 1;
     // (args[0], view, download) (args[1], img_number)
@@ -30,7 +27,7 @@ fn main() {
     let num = config.get("DEFAULT", "imgid").clone().unwrap();
     match num.trim().parse::<usize>() {
         Ok(a) => {
-            let url = main.to_owned() + &data[a].clone().to_string();
+            let url = main.to_owned() + &data[a].clone().to_string() + ".jpg";
             let folder: String = config.get("DEFAULT", "folder").clone().unwrap();
             let filename = folder.to_owned() + &data[a].clone().to_string();
 
@@ -49,12 +46,31 @@ fn main() {
                     Err(e) => println!("Error ： {}",e.to_string()),
                 }
         
-            } else if choice== "all" {}
+            } else if choice== "all" {
+                let down = thread::spawn(move || {
+                    for l in 0..len {
+                        let a = main.to_owned()+  &data[l].to_string();
+                    
+                        let filename = folder.to_owned() + &data[l].clone().to_string();
+                        // download
+                        let download = Download::new(&a,Some(&filename),None);
+        
+                        match download.download() {
+                            Ok(_) => {
+                                println!("downloaded");
+                                thread::sleep(Duration::from_millis(1));
+                            },
+                            Err(e) => println!("Error ： {}",e.to_string()),
+                        }
+                    }
+                });
+                down.join().unwrap();
+            }
         },
         Err(_err) => {
-            let url = main.to_owned() + &num.to_string();
+            let url = main.to_owned() + &num.to_string() + ".jpg";
             let folder = config.get("DEFAULT", "folder").clone().unwrap();
-            let filename = folder.to_owned() + &num.to_string() + ".jpg";
+            let filename = folder.to_owned() + &num.to_string();
             
             let choice = config.get("DEFAULT", "choice").clone().unwrap().trim().to_lowercase();
 
@@ -71,7 +87,26 @@ fn main() {
                     Err(e) => println!("Error ： {}",e.to_string()),
                 }
         
-            } else if choice== "all" {}
+            } else if choice== "all" {
+                let down = thread::spawn(move || {
+                    for l in 0..len {
+                        let a = main.to_owned()+  &data[l].to_string();
+                    
+                        let filename = folder.to_owned() + &data[l].clone().to_string();
+                        // download
+                        let download = Download::new(&a,Some(&filename),None);
+        
+                        match download.download() {
+                            Ok(_) => {
+                                println!("downloaded");
+                                thread::sleep(Duration::from_millis(1));
+                            },
+                            Err(e) => println!("Error ： {}",e.to_string()),
+                        }
+                    }
+                });
+                down.join().unwrap();
+            }
         }
     };
 }
