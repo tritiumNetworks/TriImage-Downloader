@@ -27,9 +27,9 @@ fn main() {
     let num = config.get("DEFAULT", "imgid").clone().unwrap();
     match num.trim().parse::<usize>() {
         Ok(a) => {
-            let url = main.to_owned() + &data[a].clone().to_string() + ".jpg";
+            let url = main.to_owned() + &data[a].clone().to_string();
             let folder: String = config.get("DEFAULT", "folder").clone().unwrap();
-            let filename = folder.to_owned() + &data[a].clone().to_string()  + ".jpg";
+            let filename = folder.to_owned() + &data[a].clone().to_string();
 
             let choice = config.get("DEFAULT", "choice").clone().unwrap().trim().to_lowercase();
 
