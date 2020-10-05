@@ -10,8 +10,6 @@ use std::time::Duration;
 fn main() {
     let mut config = Ini::new();
     let _map = config.load("settings.ini");
-    let _tags = vec!["neko", "neko-r19", "hentai", "hentai-gif"];
-    //print!("{}", _tags[0]);
     let tag = config.get("DEFAULT", "tag").clone().unwrap();
     let mut main = String::from("https://img.trinets.xyz/static/");
     main.push_str(&(tag.to_owned()+ "/"));
@@ -20,10 +18,7 @@ fn main() {
     let response =  requests::get(img).unwrap();
     let data = response.json().unwrap();
     let len:usize = data.len() - 1;
-    // (args[0], view, download) (args[1], img_number)
-    //number or imageid (ex. 114fc734bb)
-    /* let num= s.trim();
-    let number:usize =  num.trim().parse().unwrap_or(0); */
+
     let num = config.get("DEFAULT", "imgid").clone().unwrap();
     match num.trim().parse::<usize>() {
         Ok(a) => {
