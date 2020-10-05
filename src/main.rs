@@ -28,24 +28,51 @@ fn main() {
     /* let num= s.trim();
     let number:usize =  num.trim().parse().unwrap_or(0); */
     let num = config.get("DEFAULT", "number").clone().unwrap();
-    let number:usize = num.trim().parse().unwrap();
-    let url = main.to_owned() + &data[number].clone().to_string();
-    let folder = config.get("DEFAULT", "folder").clone().unwrap();
-    let filename = folder.to_owned() + &data[number].clone().to_string();
-    let choice = config.get("DEFAULT", "choice").clone().unwrap().trim().to_lowercase();
+    match num.trim().parse::<usize>() {
+        Ok(a) => {
+            let url = main.to_owned() + &data[a].clone().to_string();
+            let folder: String = config.get("DEFAULT", "folder").clone().unwrap();
+            let filename = folder.to_owned() + &data[a].clone().to_string();
 
-    if choice  == "view" {
-        // view
-        let _view = webbrowser::open(&url.to_string());
+            let choice = config.get("DEFAULT", "choice").clone().unwrap().trim().to_lowercase();
 
-    } else if choice == "download" {
-        // download
-        let download = Download::new(&url,Some(&filename),None);
+            if choice  == "view" {
+                // view
+                let _view = webbrowser::open(&url.to_string());
+        
+            } else if choice == "download" {
+                // download
+                let download = Download::new(&url,Some(&filename),None);
+        
+                match download.download() {
+                    Ok(_) => println!("downloaded"),
+                    Err(e) => println!("Error ： {}",e.to_string()),
+                }
+        
+            } else if choice== "all" {}
+        },
+        Err(_err) => {
+            let url = main.to_owned() + &num.to_string();
+            let folder = config.get("DEFAULT", "folder").clone().unwrap();
+            let filename = folder.to_owned() + &num.to_string() + ".jpg";
+            
+            let choice = config.get("DEFAULT", "choice").clone().unwrap().trim().to_lowercase();
 
-        match download.download() {
-            Ok(_) => println!("downloaded"),
-            Err(e) => println!("Error ： {}",e.to_string()),
+            if choice  == "view" {
+                // view
+                let _view = webbrowser::open(&url.to_string());
+        
+            } else if choice == "download" {
+                // download
+                let download = Download::new(&url,Some(&filename),None);
+        
+                match download.download() {
+                    Ok(_) => println!("downloaded"),
+                    Err(e) => println!("Error ： {}",e.to_string()),
+                }
+        
+            } else if choice== "all" {}
         }
-
-    } 
+    };
 }
+
