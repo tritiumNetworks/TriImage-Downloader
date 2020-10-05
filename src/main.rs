@@ -27,7 +27,7 @@ fn main() {
     //number or imageid (ex. 114fc734bb)
     /* let num= s.trim();
     let number:usize =  num.trim().parse().unwrap_or(0); */
-    let num = config.get("DEFAULT", "number").clone().unwrap();
+    let num = config.get("DEFAULT", "imgid").clone().unwrap();
     match num.trim().parse::<usize>() {
         Ok(a) => {
             let url = main.to_owned() + &data[a].clone().to_string();
