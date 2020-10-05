@@ -29,7 +29,7 @@ fn main() {
         Ok(a) => {
             let url = main.to_owned() + &data[a].clone().to_string() + ".jpg";
             let folder: String = config.get("DEFAULT", "folder").clone().unwrap();
-            let filename = folder.to_owned() + &data[a].clone().to_string();
+            let filename = folder.to_owned() + &data[a].clone().to_string()  + ".jpg";
 
             let choice = config.get("DEFAULT", "choice").clone().unwrap().trim().to_lowercase();
 
@@ -51,7 +51,7 @@ fn main() {
                     for l in 0..len {
                         let a = main.to_owned()+  &data[l].to_string();
                     
-                        let filename = folder.to_owned() + &data[l].clone().to_string();
+                        let filename = folder.to_owned() + &data[l].clone().to_string()  + ".jpg";
                         // download
                         let download = Download::new(&a,Some(&filename),None);
         
@@ -70,7 +70,7 @@ fn main() {
         Err(_err) => {
             let url = main.to_owned() + &num.to_string() + ".jpg";
             let folder = config.get("DEFAULT", "folder").clone().unwrap();
-            let filename = folder.to_owned() + &num.to_string();
+            let filename = folder.to_owned() + &num.to_string() + ".jpg";
             
             let choice = config.get("DEFAULT", "choice").clone().unwrap().trim().to_lowercase();
 
@@ -92,7 +92,7 @@ fn main() {
                     for l in 0..len {
                         let a = main.to_owned()+  &data[l].to_string();
                     
-                        let filename = folder.to_owned() + &data[l].clone().to_string();
+                        let filename = folder.to_owned() + &data[l].clone().to_string()  + ".jpg";
                         // download
                         let download = Download::new(&a,Some(&filename),None);
         
