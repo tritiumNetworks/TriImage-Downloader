@@ -11,3 +11,5 @@ requests = "0.0.30"
 download_rs = {version="0.2.0",features=["sync_download"]}
 webbrowser = "0.5.5"
 configparser = "1.0.0"
+openssl-sys = "0.9"
+openssl = "0.10"
