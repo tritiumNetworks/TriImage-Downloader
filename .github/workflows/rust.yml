@@ -17,6 +17,6 @@ jobs:
     steps:
     - uses: actions/checkout@v2
     - name: Build
-      run: sudo apt install openssl && cargo build --verbose
+      run: sudo apt install libssl-dev && cargo build --verbose
     - name: Run tests
-      run: sudo apt install openssl && cargo test --verbose
+      run: sudo apt install libssl-dev && cargo test --verbose
